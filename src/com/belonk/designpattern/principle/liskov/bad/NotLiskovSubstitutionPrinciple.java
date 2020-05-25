@@ -24,7 +24,8 @@ public class NotLiskovSubstitutionPrinciple {
 		 * 违反了里氏替换原则，Math换成子类Calc，计算结果错误
 		 */
 
-		int   a     = 10, b = 2, c = 8;
+		int a = 10, b = 2, c = 8;
+
 		Minus minus = new Minus();
 		int   res   = minus.calc(a, b);
 		// 8
@@ -56,7 +57,7 @@ class Minus {
 }
 
 class Plus extends Minus {
-	// 改为求和，错误的覆盖了父类的方法
+	// 改为求和，覆盖了父类的方法
 	@Override
 	public int calc(int a, int b) {
 		return a + b;
