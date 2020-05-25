@@ -1,4 +1,4 @@
-package com.belonk.designpattern.principle.liskov.bad;
+package com.belonk.designpattern.principle.lsp.bad;
 
 /**
  * Created by sun on 2020/5/24.
