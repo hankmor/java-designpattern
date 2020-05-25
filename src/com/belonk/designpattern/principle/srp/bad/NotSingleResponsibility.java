@@ -1,4 +1,4 @@
-package com.belonk.designpattern.principle.singleresponsibility.bad;
+package com.belonk.designpattern.principle.srp.bad;
 
 /**
  * 未遵守单一职责原则，一个类负责多个事情。

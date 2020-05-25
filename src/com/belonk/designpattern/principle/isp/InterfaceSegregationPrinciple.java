@@ -7,31 +7,31 @@ package com.belonk.designpattern.principle.isp;
  * @since 1.0
  */
 public class InterfaceSegregationPrinciple {
-    //~ Static fields/constants/initializer
+	//~ Static fields/constants/initializer
 
 
-    //~ Instance fields
+	//~ Instance fields
 
 
-    //~ Constructors
+	//~ Constructors
 
 
-    //~ Methods
+	//~ Methods
 
-    public static void main(String[] args) {
-        WildGoose wildGoose = new WildGoose();
-        wildGoose.fly();
+	public static void main(String[] args) {
+		WildGoose wildGoose = new WildGoose();
+		wildGoose.fly();
 
-        Dog dog = new Dog();
-        dog.runOnLand();
+		Dog dog = new Dog();
+		dog.runOnLand();
 
-        Fish fish = new Fish();
-        fish.swimInWater();
+		Fish fish = new Fish();
+		fish.swimInWater();
 
-        Tortoise tortoise = new Tortoise();
-        tortoise.runOnLand();
-        tortoise.swimInWater();
-    }
+		Tortoise tortoise = new Tortoise();
+		tortoise.runOnLand();
+		tortoise.swimInWater();
+	}
 }
 
 /**
@@ -40,32 +40,32 @@ public class InterfaceSegregationPrinciple {
  * 接口拆分，将Animal接口进行拆分，使得实现类依赖最小接口。
  */
 interface Animal {
-    // 获取动物名称
-    String getName();
+	// 获取动物名称
+	String getName();
 }
 
 // 飞行动物
 interface FlyAnimal extends Animal {
-    // 飞行
-    default void fly() {
-        System.out.println(getName() + "能够飞行");
-    }
+	// 飞行
+	default void fly() {
+		System.out.println(getName() + "能够飞行");
+	}
 }
 
 // 陆生动物
 interface LandAnimal extends Animal {
-    // 陆行
-    default void runOnLand() {
-        System.out.println(getName() + "能在陆地上跑");
-    }
+	// 陆行
+	default void runOnLand() {
+		System.out.println(getName() + "能在陆地上跑");
+	}
 }
 
 // 水生动物
 interface WaterAnimal extends Animal {
-    // 游水
-    default void swimInWater() {
-        System.out.println(getName() + "能在水中游");
-    }
+	// 游水
+	default void swimInWater() {
+		System.out.println(getName() + "能在水中游");
+	}
 }
 
 // 两栖动物
@@ -75,32 +75,32 @@ interface AmphibiousAnimal extends LandAnimal, WaterAnimal {
 
 // 大雁
 class WildGoose implements FlyAnimal {
-    @Override
-    public String getName() {
-        return "大雁";
-    }
+	@Override
+	public String getName() {
+		return "大雁";
+	}
 }
 
 // 狗
 class Dog implements LandAnimal {
-    @Override
-    public String getName() {
-        return "狗";
-    }
+	@Override
+	public String getName() {
+		return "狗";
+	}
 }
 
 // 鱼
 class Fish implements WaterAnimal {
-    @Override
-    public String getName() {
-        return "鱼";
-    }
+	@Override
+	public String getName() {
+		return "鱼";
+	}
 }
 
 // 乌龟
 class Tortoise implements AmphibiousAnimal {
-    @Override
-    public String getName() {
-        return "乌龟";
-    }
+	@Override
+	public String getName() {
+		return "乌龟";
+	}
 }
