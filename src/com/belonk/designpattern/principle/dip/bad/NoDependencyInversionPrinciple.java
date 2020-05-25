@@ -1,4 +1,4 @@
-package com.belonk.designpattern.principle.dependencyinversion.bad;
+package com.belonk.designpattern.principle.dip.bad;
 
 /**
  * Created by sun on 2020/5/24.

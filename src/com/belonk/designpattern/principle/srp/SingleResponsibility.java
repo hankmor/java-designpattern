@@ -1,4 +1,4 @@
-package com.belonk.designpattern.principle.singleresponsibility;
+package com.belonk.designpattern.principle.srp;
 
 /**
  * 单一职责原则：即一个类应该只负责一项职责，如类 A 负责两个不同职责:职责 1，职责 2。
