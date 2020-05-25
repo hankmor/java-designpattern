@@ -24,6 +24,7 @@ public class LiskovSubstitutionPrinciple {
 	 */
 	public static void main(String[] args) {
 		int a = 10, b = 2, c = 8;
+
 		// 创建子类实例
 		Minus minus = new Minus();
 		int   res   = minus.calc(a, b);
