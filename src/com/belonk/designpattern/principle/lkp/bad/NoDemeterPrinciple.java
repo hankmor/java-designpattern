@@ -1,4 +1,4 @@
-package com.belonk.designpattern.principle.dp.bad;
+package com.belonk.designpattern.principle.lkp.bad;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -52,19 +52,29 @@ class OrderService {
 	public Order getOrder(String orderNo) {
 		return ORDERS.get(orderNo);
 	}
+
+	public boolean updateOrder(Order order) {
+		System.out.println("update order");
+		return true;
+	}
 }
 
 class PayService {
 	// 成员变量，是PayService的直接朋友
 	private OrderService orderService;
 
+	public boolean updatePayRecordStatus() {
+		System.out.println("update pay record status");
+		return true;
+	}
+
 	// 支付成功：更新支付状态，更新订单状态
 	public void paidSuccessfully(String orderNo) {
-		System.out.println("更新支付状态");
+		updatePayRecordStatus();
 		//! order对于PayService而言，并不是直接朋友，是局部变量，违反了迪米特法则
 		Order order = orderService.getOrder(orderNo);
 		order.setStatus("PAID");
-		System.out.println("更新订单状态");
+		orderService.updateOrder(order);
 	}
 
 	public void setOrderService(OrderService orderService) {
