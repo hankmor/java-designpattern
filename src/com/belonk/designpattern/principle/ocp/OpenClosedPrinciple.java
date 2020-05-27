@@ -33,32 +33,32 @@ public class OpenClosedPrinciple {
 // 客户端
 class Client {
 	// 听动物的叫声，新增动物不影响客户端代码
-	public void sound(Animal animal) {
+	public void sound(AnimalCall animal) {
 		animal.call();
 	}
 }
 
 // 功能提供方，提供动物的叫声
-abstract class Animal {
+abstract class AnimalCall {
 	abstract void call();
 }
 
 // 小鸟
-class Bird extends Animal {
+class Bird extends AnimalCall {
 	public void call() {
 		System.out.println("小鸟叫声叽叽");
 	}
 }
 
 // 小狗
-class Dog extends Animal {
+class Dog extends AnimalCall {
 	public void call() {
 		System.out.println("小狗叫声汪汪");
 	}
 }
 
 // 小猫
-class Cat extends Animal {
+class Cat extends AnimalCall {
 	public void call() {
 		System.out.println("小猫叫声喵喵");
 	}

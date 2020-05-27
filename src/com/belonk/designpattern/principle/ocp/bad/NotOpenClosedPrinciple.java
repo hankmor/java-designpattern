@@ -29,7 +29,7 @@ public class NotOpenClosedPrinciple {
 // 客户端
 class Client {
 	// 听动物的叫声
-	// 问题：每次新添加动物，都需要更改客户端代码，未被了开闭原则
+	// 问题：每次新添加动物，都需要更改客户端代码，违背了开闭原则
 	public void sound(int type) {
 		if (type == 1) {
 			new Bird().call();
@@ -42,22 +42,29 @@ class Client {
 	}
 }
 
+abstract class AnimalCall {
+	abstract void call();
+}
+
 // 小鸟
-class Bird {
+class Bird extends AnimalCall {
+	@Override
 	public void call() {
 		System.out.println("小鸟叫声叽叽");
 	}
 }
 
 // 小狗
-class Dog {
+class Dog extends AnimalCall {
+	@Override
 	public void call() {
 		System.out.println("小狗叫声汪汪");
 	}
 }
 
 // 小猫
-class Cat {
+class Cat extends AnimalCall {
+	@Override
 	public void call() {
 		System.out.println("小猫叫声喵喵");
 	}
