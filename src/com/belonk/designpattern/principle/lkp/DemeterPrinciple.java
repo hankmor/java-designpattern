@@ -1,4 +1,4 @@
-package com.belonk.designpattern.principle.dp;
+package com.belonk.designpattern.principle.lkp;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -58,6 +58,12 @@ class OrderService {
 	public void updateOrderStatus(String orderNo, String status) {
 		Order order = getOrder(orderNo);
 		order.setStatus(status);
+		System.out.println("update pay record status");
+	}
+
+	public boolean updateOrder(Order order) {
+		System.out.println("update order");
+		return true;
 	}
 }
 
@@ -65,12 +71,16 @@ class PayService {
 	// 成员变量，是PayService的直接朋友
 	private OrderService orderService;
 
+	public boolean updatePayRecordStatus() {
+		System.out.println("update pay record status");
+		return true;
+	}
+
 	// 支付成功：更新支付状态，更新订单状态
 	public void paidSuccessfully(String orderNo) {
-		System.out.println("更新支付状态");
+		updatePayRecordStatus();
 		// 改进：将更新订单状态的方法放到OrderService中
 		orderService.updateOrderStatus(orderNo, "PAID");
-		System.out.println("更新订单状态");
 	}
 
 	public void setOrderService(OrderService orderService) {
