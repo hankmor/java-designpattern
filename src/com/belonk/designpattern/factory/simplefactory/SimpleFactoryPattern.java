@@ -46,7 +46,7 @@ class Store {
 }
 
 /**
- * 扭来订购工厂
+ * 牛奶订购工厂
  */
 class MilkOrderFactory {
 	public static Milk orderMilk(String name) {
