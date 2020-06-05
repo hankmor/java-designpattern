@@ -23,16 +23,16 @@ public class SimpleFactoryPattern {
 	 */
 	public static void main(String[] args) {
 		Store store = new Store();
-		Milk  milk  = store.orderMilk("pure");
-		System.out.println("店铺订购了" + milk.getName());
-		milk = store.orderMilk("yogurt");
-		System.out.println("店铺订购了" + milk.getName());
-		milk = store.orderMilk("highCalcium");
-		System.out.println("店铺订购了" + milk.getName());
+		Milk  milk  = store.createMilk("pure");
+		System.out.println("店铺售出了" + milk.getName());
+		milk = store.createMilk("yogurt");
+		System.out.println("店铺售出了" + milk.getName());
+		milk = store.createMilk("highCalcium");
+		System.out.println("店铺售出了" + milk.getName());
 
 		// 生产鲜奶，无法生产
-		milk = store.orderMilk("freshMilk");
-		System.out.println("店铺订购了" + milk.getName());
+		milk = store.createMilk("freshMilk");
+		System.out.println("店铺售出了" + milk.getName());
 	}
 }
 
@@ -40,8 +40,17 @@ public class SimpleFactoryPattern {
  * 现在，客户端只依赖一个工厂类，不直接依赖具体的牛奶
  */
 class Store {
-	public Milk orderMilk(String name) {
-		return MilkOrderFactory.orderMilk(name);
+	public Milk sale(String name) {
+		System.out.println("顾客购买牛奶");
+		System.out.println("  > 生产牛奶");
+		Milk milk = createMilk(name);
+		System.out.println("  > 收款");
+		System.out.println("  > 拿货");
+		return milk;
+	}
+
+	public Milk createMilk(String name) {
+		return MilkOrderFactory.createMilk(name);
 	}
 }
 
@@ -49,7 +58,7 @@ class Store {
  * 牛奶订购工厂
  */
 class MilkOrderFactory {
-	public static Milk orderMilk(String name) {
+	public static Milk createMilk(String name) {
 		if ("pure".equals(name)) {
 			return new PureMilk();
 		} else if ("yogurt".equals(name)) {
