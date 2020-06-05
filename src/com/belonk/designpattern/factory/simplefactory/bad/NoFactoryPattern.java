@@ -23,16 +23,16 @@ public class NoFactoryPattern {
 	 */
 	public static void main(String[] args) {
 		Store store = new Store();
-		Milk  milk  = store.orderMilk("pure");
-		System.out.println("店铺订购了" + milk.getName());
-		milk = store.orderMilk("yogurt");
-		System.out.println("店铺订购了" + milk.getName());
-		milk = store.orderMilk("highCalcium");
-		System.out.println("店铺订购了" + milk.getName());
+		Milk  milk  = store.sale("pure");
+		System.out.println("店铺售出了" + milk.getName());
+		milk = store.sale("yogurt");
+		System.out.println("店铺售出了" + milk.getName());
+		milk = store.sale("highCalcium");
+		System.out.println("店铺售出了" + milk.getName());
 
 		// 生产鲜奶，无法生产
-		milk = store.orderMilk("freshMilk");
-		System.out.println("店铺订购了" + milk.getName());
+		milk = store.sale("freshMilk");
+		System.out.println("店铺售出了" + milk.getName());
 	}
 }
 
@@ -40,7 +40,16 @@ public class NoFactoryPattern {
  * 这种设计，违背了开闭原则，每次增加生产的牛奶，客户端也要变动
  */
 class Store {
-	public Milk orderMilk(String name) {
+	public Milk sale(String name) {
+		System.out.println("顾客购买牛奶");
+		System.out.println("  > 生产牛奶");
+		Milk milk = createMilk(name);
+		System.out.println("  > 收款");
+		System.out.println("  > 拿货");
+		return milk;
+	}
+
+	public Milk createMilk(String name) {
 		if ("pure".equals(name)) {
 			return new PureMilk();
 		} else if ("yogurt".equals(name)) {
@@ -48,7 +57,7 @@ class Store {
 		} else if ("highCalcium".equals(name)) {
 			return new HighCalciumMilk();
 		} else {
-			throw new RuntimeException("无法订购牛奶：" + name);
+			throw new RuntimeException("无法生产牛奶：" + name);
 		}
 	}
 }
