@@ -44,9 +44,15 @@ public class CarBuilderDemo {
 
 		// 国外车间，组装进口汽车
 		ForeignCarWorkShop foreignCarWorkShop = new ForeignCarWorkShop();
-		CarDirector carDirector1 = new CarDirector(foreignCarWorkShop);
-		Car importCar = carDirector1.buildCar();
+		carDirector = new CarDirector(foreignCarWorkShop);
+		Car importCar = carDirector.buildCar();
 		System.out.println(importCar);
+
+		// 基于接口构建器
+		ChineseCarWorkShop1 chineseCarWorkShop1 = new ChineseCarWorkShop1();
+		CarDirector1 carDirector1 = new CarDirector1(chineseCarWorkShop1);
+		Car car = carDirector1.buildCar();
+		System.out.println(car);
 	}
 }
 
@@ -190,5 +196,78 @@ class CarDirector {
 		// 组装车架
 		carBuilder.buildFrame();
 		return carBuilder.build();
+	}
+}
+
+//===== 抽象构建器为接口
+
+// 抽象构建器
+interface ICarBuilder {
+	void buildMotor();
+
+	void buildGearbox();
+
+	void buildChassis();
+
+	void buildFrame();
+
+	Car build();
+}
+
+class CarDirector1 {
+	private ICarBuilder carBuilder;
+
+	public CarDirector1(ICarBuilder carBuilder) {
+		this.carBuilder = carBuilder;
+	}
+
+	public void setCarBuilder(ICarBuilder carBuilder) {
+		this.carBuilder = carBuilder;
+	}
+
+	// 指挥者决定最终如何组装产品
+	public Car buildCar() {
+		// 组装底盘
+		carBuilder.buildChassis();
+		// 组装变速箱
+		carBuilder.buildGearbox();
+		// 组装发动起
+		carBuilder.buildMotor();
+		// 组装车架
+		carBuilder.buildFrame();
+		return carBuilder.build();
+	}
+}
+
+class ChineseCarWorkShop1 implements ICarBuilder {
+	private Car car;
+
+	public ChineseCarWorkShop1() {
+		this.car = new Car();
+	}
+
+	@Override
+	public void buildMotor() {
+		car.setMotor("国产发动机");
+	}
+
+	@Override
+	public void buildGearbox() {
+		car.setGearbox("国产变速箱");
+	}
+
+	@Override
+	public void buildChassis() {
+		car.setChassis("国产底盘");
+	}
+
+	@Override
+	public void buildFrame() {
+		car.setFrame("国产车架");
+	}
+
+	@Override
+	public Car build() {
+		return car;
 	}
 }
