@@ -40,6 +40,8 @@ public class BridgePatternDemo {
 		System.out.println("样式：" + phone.typeName() + ", 打电话：" + phone.call());
 		phone = new BarPhone(new XiaomiPhone());
 		System.out.println("样式：" + phone.typeName() + ", 打电话：" + phone.call());
+		phone = new BarPhone(new VivoPhone());
+		System.out.println("样式：" + phone.typeName() + ", 打电话：" + phone.call());
 	}
 }
 
