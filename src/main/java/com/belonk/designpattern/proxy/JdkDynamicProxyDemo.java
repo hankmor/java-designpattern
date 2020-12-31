@@ -80,7 +80,7 @@ class JdkDynamicProxyFactory {
 		 * JDK动态代理只能代理实现了某些接口的类，即：代理目标对象必须实现接口，否则不能为其创建代理对象。
 		 *
 		 * 创建JDK代理对象，需要三个参数：
-		 * ClassLoader loader: 指定当前目标对象的类加载器
+		 * ClassLoader loader: 指定创建动态代理实例对象的类加载器
 		 * Class<?>[] interfaces: 指定代理的接口
 		 * InvocationHandler h：调用处理器，每个代理对象都有一个关联的调用处理器, 在代理对象上调用方法时，会执行这个处理器。invoke方法有三个参数：
 		 *     1、proxy：生成的代理对象
