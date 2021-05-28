@@ -48,13 +48,14 @@ abstract class AbstractVaccinate {
 		tripMode();
 		check();
 		vaccinating();
-		observate();
+		if (mustObservate())
+			observate();
+		afterVaccinated();
 	}
 
 	// 预约
 	public abstract void order();
 
-	// 钩子方法：由子类决定是否覆盖
 	// 去往接种目的地方式
 	public void tripMode() {
 		System.out.println(this.name + " 接种前自行前往接种地...");
@@ -63,14 +64,23 @@ abstract class AbstractVaccinate {
 	// 审核
 	public abstract void check();
 
-	// 接种，钩子方法
+	// 接种
 	public void vaccinating() {
 		System.out.println(this.name + " 接种中...");
 	}
 
-	// 观察，钩子方法
+	// 观察
 	public void observate() {
 		System.out.println(this.name + " 接种后观察30分钟...");
+	}
+
+	// 钩子方法，是否必须观察
+	public boolean mustObservate() {
+		return false;
+	}
+
+	public void afterVaccinated() {
+		System.out.println(this.name + " 接种成功！");
 	}
 }
 
@@ -106,7 +116,6 @@ class Covid19Vaccine extends AbstractVaccinate {
 		System.out.println(this.name + " 接种前到社区预约...");
 	}
 
-	// 重写钩子方法
 	@Override
 	public void tripMode() {
 		System.out.println(this.name + " 接种前社区统一安排前往接种地...");
@@ -115,5 +124,10 @@ class Covid19Vaccine extends AbstractVaccinate {
 	@Override
 	public void check() {
 		System.out.println(this.name + " 接种前审核身份证...");
+	}
+
+	@Override
+	public boolean mustObservate() {
+		return true;
 	}
 }
