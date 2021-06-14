@@ -80,7 +80,7 @@ class Waiter {
 	// 通知点餐完成
 	void orderFinished() {
 		System.out.println("点餐完成，交给厨房做菜");
-		this.orderCommand.order(names.toArray(new String[]{}));
+		this.orderCommand.execute(names.toArray(new String[]{}));
 	}
 
 	// 通知取消点餐
@@ -93,13 +93,13 @@ class Waiter {
 // 点餐命令
 interface OrderCommand {
 	// 点餐
-	void order(String... names);
+	void execute(String... names);
 
 	// 取消点餐
 	void cancel(String... names);
 }
 
-// 具体点餐命令
+// 具体点餐命令，可以视情况细化，比如将点菜命令细化为炒菜命令、做汤命令、蒸菜命令等
 class ConcreteOrderCommand implements OrderCommand {
 	private Cook cook;
 
@@ -108,7 +108,7 @@ class ConcreteOrderCommand implements OrderCommand {
 	}
 
 	@Override
-	public void order(String... names) {
+	public void execute(String... names) {
 		// 厨师按顺序做菜
 		for (String name : names) {
 			this.cook.cooking(name);
@@ -121,7 +121,7 @@ class ConcreteOrderCommand implements OrderCommand {
 	}
 }
 
-// 厨师
+// 厨师，可以细化为多种厨师，负责实现某一具体命令，如炒菜厨师、蒸菜厨师、做汤的初始等等
 class Cook {
 	void cooking(String name) {
 		System.out.println("厨师正在做菜: " + name);
@@ -131,4 +131,3 @@ class Cook {
 		System.out.println("知道客户取消了，不再做：" + Arrays.toString(names));
 	}
 }
-
