@@ -18,6 +18,12 @@ public class MediatorClient {
 
 	//~ Methods
 
+	/*
+	 * 中介者模式：同事类之间不直接通信，而是都去找中介，通过中介对象进行转发
+	 *
+	 * 典型的例子：消息队列，房产中介等等
+	 */
+
 	public static void main(String[] args) {
 		ConcreteMediator mediator = new ConcreteMediator();
 		ConcreteColleague1 colleague1 = new ConcreteColleague1(mediator);
