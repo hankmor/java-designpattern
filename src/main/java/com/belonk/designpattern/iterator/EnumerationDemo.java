@@ -61,6 +61,6 @@ public class EnumerationDemo {
 
 		System.out.println("forEachRemaining");
 		// 内部迭代器，Vector内部没有使用迭代器，而ArrayList则使用增强for循环来处理
-		iterator.forEachRemaining(System.out::println);
+		ints.iterator().forEachRemaining(System.out::println);
 	}
 }
