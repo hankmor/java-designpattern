@@ -1,6 +1,6 @@
 package com.belonk.designpattern.iterator;
 
-import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * 聚集对象。
@@ -16,27 +16,40 @@ public class Aggregate<T> implements MyIterable<T> {
 
 	//~ Instance fields
 
-	private final int capacity;
+	private final int maxCapacity;
 	private final Object[] elements;
-	private int current;
+	private int size;
 
 	//~ Constructors
 
 	public Aggregate(int capacity) {
-		this.capacity = capacity;
-		elements = new Object[size()];
+		this.maxCapacity = capacity;
+		elements = new Object[capacity];
 	}
 
 	public int size() {
-		return capacity;
+		return size;
 	}
 
 	public T add(T item) {
-		if (current++ > capacity) {
+		if (size > maxCapacity - 1) {
 			throw new IllegalStateException("Capacity overflow!");
 		}
-		elements[current] = item;
+		elements[size++] = item;
 		return item;
+	}
+
+	public T remove(int index) {
+		if (index < 0 || index > size - 1) {
+			throw new ArrayIndexOutOfBoundsException();
+		}
+		T removed = (T) elements[index];
+		if (index < size - 1) {
+			// 删除，重新拷贝数组
+			System.arraycopy(elements, index + 1, elements, index, size - index - 1);
+		}
+		elements[--size] = null;
+		return removed;
 	}
 
 	//~ Methods
@@ -46,27 +59,31 @@ public class Aggregate<T> implements MyIterable<T> {
 		return new MyIteratorImpl<T>();
 	}
 
-	private static class MyIteratorImpl<T> implements MyIterator<T> {
-		private int current;
+	private class MyIteratorImpl<T> implements MyIterator<T> {
+		// 游标位置
+		private int cursor;
 
 		@Override
 		public T next() {
-			return null;
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			return (T) elements[cursor++];
 		}
 
 		@Override
 		public boolean hasNext() {
-			return false;
+			return cursor != size;
 		}
 
 		@Override
 		public boolean first() {
-			return false;
+			return cursor == 1;
 		}
 
 		@Override
 		public boolean last() {
-			return false;
+			return cursor == size;
 		}
 	}
 }
