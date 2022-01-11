@@ -14,6 +14,6 @@ public interface MyIterable<T> {
 
 	//~ Interfaces
 
-	// 返回迭代器
+	// 创建并返回迭代器
 	MyIterator<T> iterator();
 }
