@@ -18,9 +18,6 @@ public class Memento {
 
 	//~ Constructors
 
-	public Memento() {
-	}
-
 	public Memento(State state) {
 		this.state = state;
 	}
