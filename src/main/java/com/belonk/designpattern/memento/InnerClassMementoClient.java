@@ -6,7 +6,7 @@ package com.belonk.designpattern.memento;
  * @author sunfuchang03@126.com
  * @since 1.0
  */
-public class MementoClient {
+public class InnerClassMementoClient {
 	//~ Static fields/constants/initializer
 
 
@@ -21,29 +21,31 @@ public class MementoClient {
 	public static void main(String[] args) {
 		// 初始状态
 		String name = "李逍遥";
-		Originator originator = new Originator(name);
-		originator.setState(new State(10, 10, 100, 100));
+		State initState = new State(10, 10, 100, 100);
+		OriginatorWithInnerClass originator = new OriginatorWithInnerClass(name);
+		originator.setState(initState);
 		originator.setTitle("出生小菜鸟");
 		System.out.println(originator);
 
 		// 打怪升级一段时间后
-		originator.setState(new State(40, 50, 40, 10));
+		State state = new State(40, 50, 40, 10);
+
+		originator.setState(state);
 		originator.setTitle("江湖小虾米");
 		System.out.println(originator);
 
 		// 弄了一套装备，准备打boss
-		originator.setState(new State(90, 80, 100, 100));
+		State beforeBoss = new State(90, 80, 100, 100);
+		originator.setState(beforeBoss);
 		originator.setTitle("武林高手");
 		System.out.println(originator);
 		// 存档
-		Memento memento = originator.createMemento();
-		Caretaker caretaker = new Caretaker();
-		caretaker.setMemento(memento);
-
+		originator.createMemento();
 		// 打BOSS之后，挂了，需要恢复存档
-		originator.setState(new State(90, 80, 0, 0));
+		State afterBoss = new State(90, 80, 0, 0);
+		originator.setState(afterBoss);
 		System.out.println("挑战boss失败：" + originator);
-		originator.recover(caretaker.getMemento());
+		originator.recover();
 		System.out.println("恢复存档：" + originator);
 	}
 }
