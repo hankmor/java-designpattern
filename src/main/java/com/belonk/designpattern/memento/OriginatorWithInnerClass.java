@@ -8,14 +8,14 @@ package com.belonk.designpattern.memento;
  * @author sunfuchang03@126.com
  * @since 1.0
  */
-public class Originator {
+public class OriginatorWithInnerClass {
 	//~ Static fields/constants/initializer
 
 
 	//~ Instance fields
 
-	// 状态
 	private State state;
+	private InnerMemento innerMemento;
 	// 名称
 	private final String name;
 	// 称号
@@ -23,18 +23,18 @@ public class Originator {
 
 	//~ Constructors
 
-	public Originator(String name) {
+	public OriginatorWithInnerClass(String name) {
 		this.name = name;
 	}
 
 	//~ Methods
 
-	public Memento createMemento() {
-		return new Memento(this.state);
+	public void createMemento() {
+		this.innerMemento = new InnerMemento(this.state);
 	}
 
-	public void recover(Memento memento) {
-		this.state = memento.getState();
+	public void recover() {
+		this.state = this.innerMemento.getState();
 	}
 
 	public State getState() {
@@ -56,5 +56,26 @@ public class Originator {
 	@Override
 	public String toString() {
 		return this.name + "[" + this.title + "] : " + this.state.toString();
+	}
+
+	private class InnerMemento {
+		//~ Static fields/constants/initializer
+
+
+		//~ Instance fields
+
+		private final State state;
+
+		//~ Constructors
+
+		InnerMemento(State state) {
+			this.state = state;
+		}
+
+		//~ Methods
+
+		State getState() {
+			return state;
+		}
 	}
 }
