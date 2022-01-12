@@ -6,7 +6,7 @@ package com.belonk.designpattern.memento;
  * @author sunfuchang03@126.com
  * @since 1.0
  */
-public class MementoClient {
+public class PrototypeMementoClient {
 	//~ Static fields/constants/initializer
 
 
@@ -21,7 +21,7 @@ public class MementoClient {
 	public static void main(String[] args) {
 		// 初始状态
 		String name = "李逍遥";
-		Originator originator = new Originator(name);
+		PrototypeOriginator originator = new PrototypeOriginator(name);
 		originator.setState(new State(10, 10, 100, 100));
 		originator.setTitle("出生小菜鸟");
 		System.out.println(originator);
@@ -36,8 +36,8 @@ public class MementoClient {
 		originator.setTitle("武林高手");
 		System.out.println(originator);
 		// 存档
-		Memento memento = originator.createMemento();
-		Caretaker caretaker = new Caretaker();
+		PrototypeOriginator memento = originator.createMemento();
+		PrototypeCaretaker caretaker = new PrototypeCaretaker();
 		caretaker.setMemento(memento);
 
 		// 打BOSS之后，挂了，需要恢复存档
