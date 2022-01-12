@@ -8,13 +8,12 @@ package com.belonk.designpattern.memento;
  * @author sunfuchang03@126.com
  * @since 1.0
  */
-public class Originator {
+public class PrototypeOriginator implements Cloneable {
 	//~ Static fields/constants/initializer
 
 
 	//~ Instance fields
 
-	// 状态
 	private State state;
 	// 名称
 	private final String name;
@@ -23,18 +22,19 @@ public class Originator {
 
 	//~ Constructors
 
-	public Originator(String name) {
+	public PrototypeOriginator(String name) {
 		this.name = name;
 	}
 
 	//~ Methods
 
-	public Memento createMemento() {
-		return new Memento(this.state);
+	public PrototypeOriginator createMemento() {
+		return this.clone();
 	}
 
-	public void recover(Memento memento) {
-		this.state = memento.getState();
+	public void recover(PrototypeOriginator memento) {
+		this.setState(memento.getState());
+		this.setTitle(memento.getTitle());
 	}
 
 	public State getState() {
@@ -56,5 +56,13 @@ public class Originator {
 	@Override
 	public String toString() {
 		return this.name + "[" + this.title + "] : " + this.state.toString();
+	}
+
+	@Override
+	protected PrototypeOriginator clone() {
+		PrototypeOriginator originator = new PrototypeOriginator(this.name);
+		originator.setState(this.getState());
+		originator.setTitle(this.getTitle());
+		return originator;
 	}
 }
