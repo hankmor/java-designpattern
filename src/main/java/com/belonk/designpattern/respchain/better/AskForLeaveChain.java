@@ -1,4 +1,4 @@
-package com.belonk.designpattern.respchain;
+package com.belonk.designpattern.respchain.better;
 
 import java.util.Random;
 
@@ -8,7 +8,7 @@ import java.util.Random;
  * @author sunfuchang03@126.com
  * @since 1.0
  */
-public class AskForLeave {
+public class AskForLeaveChain {
 	//~ Static fields/constants/initializer
 
 
@@ -39,15 +39,10 @@ public class AskForLeave {
 		GroupLeader groupLeader = new GroupLeader();
 		DeptManager deptManager = new DeptManager();
 		CompanyManager companyManager = new CompanyManager();
-		if (groupLeader.canHandle(request)) {
-			groupLeader.handle(request);
-		} else if (deptManager.canHandle(request)) {
-			deptManager.handle(request);
-		} else if (companyManager.canHandle(request)) {
-			companyManager.handle(request);
-		} else {
-			System.err.println("没有人能处理这个请求请求");
-		}
+		groupLeader.setSuperior(deptManager);
+		deptManager.setSuperior(companyManager);
+
+		groupLeader.handle(request);
 	}
 }
 
@@ -93,7 +88,13 @@ interface Leader {
 			}
 			return;
 		}
-		throw new RuntimeException(this.getClass() + " 不能处理请假请求: " + request);
+		Leader superior = getSuperior();
+		if (superior != null) {
+			// 上级领导处理
+			superior.handle(request);
+		} else {
+			throw new RuntimeException(this.getClass() + " 不能处理请假请求: " + request);
+		}
 	}
 
 	/**
@@ -103,10 +104,36 @@ interface Leader {
 	 * @return 可以处理返回true，否则返回false
 	 */
 	boolean canHandle(LeaveRequest request);
+
+	/**
+	 * 设置上级领导
+	 */
+	void setSuperior(Leader leader1);
+
+	/**
+	 * 查询上级领导
+	 */
+	Leader getSuperior();
+}
+
+abstract class AbstractLeader implements Leader {
+	private Leader superior;
+
+	public abstract boolean canHandle(LeaveRequest request);
+
+	@Override
+	public void setSuperior(Leader superior) {
+		this.superior = superior;
+	}
+
+	@Override
+	public Leader getSuperior() {
+		return this.superior;
+	}
 }
 
 // 组长
-class GroupLeader implements Leader {
+class GroupLeader extends AbstractLeader {
 	@Override
 	public boolean canHandle(LeaveRequest request) {
 		return request.getDays() <= 3;
@@ -114,19 +141,18 @@ class GroupLeader implements Leader {
 }
 
 // 部门经理
-class DeptManager implements Leader {
+class DeptManager extends AbstractLeader {
 	@Override
 	public boolean canHandle(LeaveRequest request) {
 		return request.getDays() >= 4 && request.getDays() <= 7;
 	}
+
 }
 
 // 总经理
-class CompanyManager implements Leader {
+class CompanyManager extends AbstractLeader {
 	@Override
 	public boolean canHandle(LeaveRequest request) {
 		return request.getDays() > 7;
 	}
 }
-
-
