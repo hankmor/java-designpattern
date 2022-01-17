@@ -39,6 +39,7 @@ public class AskForLeave {
 		GroupLeader groupLeader = new GroupLeader();
 		DeptManager deptManager = new DeptManager();
 		CompanyManager companyManager = new CompanyManager();
+		// 从下到上逐个判断
 		if (groupLeader.canHandle(request)) {
 			groupLeader.handle(request);
 		} else if (deptManager.canHandle(request)) {
@@ -46,7 +47,7 @@ public class AskForLeave {
 		} else if (companyManager.canHandle(request)) {
 			companyManager.handle(request);
 		} else {
-			System.err.println("没有人能处理这个请求请求");
+			System.err.println("没有人能处理这个请假请求");
 		}
 	}
 }
