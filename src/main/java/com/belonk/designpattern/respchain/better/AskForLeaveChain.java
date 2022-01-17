@@ -42,6 +42,7 @@ public class AskForLeaveChain {
 		groupLeader.setSuperior(deptManager);
 		deptManager.setSuperior(companyManager);
 
+		// 部门领导发起请求审核，如果他不能处理，则向上级提交
 		groupLeader.handle(request);
 	}
 }
